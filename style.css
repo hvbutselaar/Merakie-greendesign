@@ -97,6 +97,9 @@ header.site{position:absolute;top:0;left:0;right:0;z-index:50}
 /* split (two-column) */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
 .split.wide-text{grid-template-columns:1.3fr 1fr}
+.split.photo-left{grid-template-columns:1fr 1.25fr;align-items:start}
+.script-quote{font-family:'Dancing Script',cursive;font-weight:500;font-size:clamp(23px,2.8vw,30px);
+  color:var(--muted);line-height:1.4;margin-top:22px;max-width:440px}
 .split .pic img{width:100%;border-radius:6px;box-shadow:var(--shadow)}
 .split .logo-badge{display:flex;align-items:center;justify-content:center}
 .split .logo-badge img{max-width:78%}
@@ -235,7 +238,7 @@ footer.ft .copy{width:100%;margin-top:26px;padding-top:20px;border-top:1px solid
 /* ---------------------------------------------------------------- RESPONSIVE */
 @media(max-width:980px){
   .split,.contact-grid,.duo{grid-template-columns:1fr;gap:36px}
-  .split.wide-text{grid-template-columns:1fr}
+  .split.wide-text,.split.photo-left{grid-template-columns:1fr}
   .price-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:860px){
