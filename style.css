@@ -1,0 +1,250 @@
+/* ==========================================================================
+   MERAKI green design — clean hand-coded stylesheet
+   Matches the live (Elementor) site's look with lightweight CSS.
+   Fonts: Poppins (headings) + Raleway (body). Accent: coral #D0886E.
+   ========================================================================== */
+
+:root{
+  --coral:#d0886e;        /* brand accent (typed hero, nav hover, buttons) */
+  --coral-d:#b56a4f;      /* darker coral — hover */
+  --ink:#333333;          /* body text */
+  --muted:#555555;        /* secondary text */
+  --title:#faf7f2;        /* hero title (warm near-white) */
+  --line:#e7e7e3;
+  --soft:#f1ebe0;         /* deeper warm cream — tinted sections & cards on the cream base */
+  --sage:#8fa886;         /* subtle green (logo) */
+  --shadow:0 18px 40px rgba(40,40,40,.10);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Raleway',sans-serif;color:var(--ink);background:#faf7f2;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+h1,h2,h3,h4{font-family:'Poppins',sans-serif;line-height:1.15}
+
+.wrap{max-width:1140px;margin:0 auto;padding:0 28px}
+.sec{padding:80px 0}
+.sec.soft{background:var(--soft)}
+.center{text-align:center}
+
+/* buttons */
+.btn{display:inline-block;background:var(--coral);color:#fff;padding:14px 34px;border-radius:6px;
+  font-family:'Poppins',sans-serif;font-weight:500;font-size:14px;letter-spacing:.03em;border:none;cursor:pointer;
+  transition:background .2s,transform .2s,box-shadow .2s}
+.btn:hover{background:var(--coral-d);transform:translateY(-2px);box-shadow:0 10px 24px rgba(208,136,110,.35)}
+.btn.ghost{background:transparent;border:1.5px solid rgba(255,255,255,.8);color:#fff}
+.btn.ghost:hover{background:#fff;color:var(--ink);box-shadow:none}
+
+/* ---------------------------------------------------------------- HEADER / NAV */
+header.site{position:absolute;top:0;left:0;right:0;z-index:50}
+.nav{display:flex;align-items:center;justify-content:center;gap:38px;max-width:1240px;margin:0 auto;padding:22px 32px;position:relative}
+.nav .brand{position:absolute;left:32px;top:50%;transform:translateY(-50%)}
+.nav .brand img{height:70px;width:auto}
+.nav ul{display:flex;gap:34px;list-style:none;align-items:center}
+.nav a{font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;letter-spacing:.04em;
+  text-transform:uppercase;color:#fff;transition:color .2s}
+.nav a:hover,.nav a.active{color:var(--coral)}
+.nav .has-sub{position:relative}
+.nav .has-sub>a::after{content:"⌄";margin-left:6px;font-size:12px;opacity:.8}
+.submenu{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(6px);background:#fff;
+  border-radius:8px;box-shadow:var(--shadow);padding:8px;min-width:210px;display:flex;flex-direction:column;gap:2px;
+  opacity:0;visibility:hidden;transition:.2s}
+.nav .has-sub:hover .submenu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.submenu a{color:var(--ink);padding:9px 14px;border-radius:6px;text-transform:none;font-size:14px}
+.submenu a:hover{background:var(--soft);color:var(--coral-d)}
+.hamburger{display:none;position:absolute;right:28px;top:50%;transform:translateY(-50%);
+  flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
+.hamburger span{width:26px;height:2px;background:#fff;border-radius:2px}
+.mobile{display:none}
+
+/* ---------------------------------------------------------------- HERO */
+.hero{position:relative;min-height:82vh;display:flex;align-items:center;justify-content:center;text-align:center;
+  color:#fff;background-size:cover;background-position:center;padding:150px 20px 90px}
+.hero::before{content:"";position:absolute;inset:0;background:rgba(40,44,40,.28)}
+.hero-inner{position:relative;z-index:2;width:100%;max-width:1000px}
+.hero h1{font-weight:900;font-size:clamp(40px,7vw,70px);color:var(--title);letter-spacing:.01em}
+.hero .typed-line{font-family:'Poppins',sans-serif;font-weight:900;color:var(--coral);
+  font-size:clamp(30px,6.4vw,70px);line-height:1.2;min-height:1.2em;margin-top:2px}
+.hero .typed-line .caret{display:inline-block;width:4px;height:.9em;background:var(--coral);
+  margin-left:6px;vertical-align:-3px;animation:caret 1s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.hero .typed-line .caret{animation:none}}
+.hero .btns{margin-top:34px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* compact hero (interior pages): image + big centered title, no typed line */
+.hero.compact{min-height:46vh;padding:150px 20px 70px}
+.hero.compact h1{font-size:clamp(34px,5.5vw,58px)}
+
+/* ---------------------------------------------------------------- TAGLINE BAND */
+.tagline-band{text-align:center;padding:34px 20px 10px}
+.tagline-band p{font-family:'Raleway',sans-serif;font-size:clamp(20px,2.4vw,29px);color:var(--muted);font-weight:400}
+
+/* full-width contained image band (e.g. office photo under hero) */
+.img-band{padding:26px 0 10px}
+.img-band img{width:100%;max-width:1140px;margin:0 auto;border-radius:4px;object-fit:cover}
+
+/* ---------------------------------------------------------------- SECTION HEADINGS */
+.head{text-align:center;max-width:760px;margin:0 auto 50px}
+.head .eyebrow{font-family:'Poppins',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:12px;
+  font-weight:600;color:var(--coral)}
+.head h2{font-size:clamp(28px,4vw,42px);font-weight:600;color:var(--ink);margin-top:10px}
+.head p{color:var(--muted);margin-top:14px;font-size:17px}
+.prose p{color:var(--muted);font-size:17px;margin-bottom:18px}
+.prose h2,.prose h3{color:var(--ink);font-weight:600}
+.prose strong{color:var(--ink);font-weight:600}
+
+/* split (two-column) */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.split.wide-text{grid-template-columns:1.3fr 1fr}
+.split .pic img{width:100%;border-radius:6px;box-shadow:var(--shadow)}
+.split .logo-badge{display:flex;align-items:center;justify-content:center}
+.split .logo-badge img{max-width:78%}
+
+/* ---------------------------------------------------------------- SERVICE TEASERS / CARDS */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px}
+.svc{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;
+  color:inherit;transition:transform .25s,box-shadow .25s}
+a.svc:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+.svc .pic{aspect-ratio:3/2;background-size:cover;background-position:center}
+.svc .body{padding:26px 28px 30px}
+.svc h3{font-size:22px;font-weight:600;margin-bottom:10px}
+.svc p{color:var(--muted);font-size:15px}
+.svc .more{display:inline-block;margin-top:16px;font-family:'Poppins',sans-serif;font-weight:500;font-size:14px;color:var(--coral-d)}
+
+/* numbered steps */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:24px}
+.step{background:#fff;border:1px solid var(--line);border-radius:8px;padding:28px 26px}
+.step .num{font-family:'Poppins',sans-serif;font-weight:600;color:#fff;background:var(--coral);width:38px;height:38px;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.step h3{font-size:19px;font-weight:600;margin-bottom:8px}
+.step p{color:var(--muted);font-size:15px}
+
+/* duo boxes */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.duo .box{background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.duo .box .pic{aspect-ratio:3/2;background-size:cover;background-position:center}
+.duo .box .body{padding:24px 26px}
+.duo .box h3{font-size:20px;font-weight:600;margin-bottom:8px}
+.duo .box p{color:var(--muted);font-size:15px}
+
+/* checklist */
+.checks{list-style:none;margin:18px 0}
+.checks li{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;color:var(--ink);font-size:16px}
+.checks svg{width:22px;height:22px;stroke:var(--coral);flex:0 0 22px;margin-top:3px}
+
+/* ---------------------------------------------------------------- PRICING */
+.price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.price-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:32px 24px;text-align:center;
+  transition:transform .25s,box-shadow .25s}
+.price-card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+.price-card .range{font-family:'Poppins',sans-serif;font-weight:500;font-size:15px;color:var(--ink)}
+.price-card .rule{width:34px;height:2px;background:var(--coral);border:none;margin:16px auto}
+.price-card .price{font-family:'Poppins',sans-serif;font-weight:700;font-size:31px;color:var(--coral-d);line-height:1.1}
+.price-includes{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 30px;margin-top:40px}
+.price-includes .inc{display:flex;align-items:center;gap:10px;font-size:16px;color:var(--ink)}
+.price-includes .inc svg{width:20px;height:20px;stroke:var(--coral);flex:0 0 20px}
+
+/* ---------------------------------------------------------------- CTA BAND */
+.ctaband{position:relative;border-radius:8px;overflow:hidden;text-align:center;color:#fff;padding:80px 40px;
+  background-size:cover;background-position:center}
+.ctaband::before{content:"";position:absolute;inset:0;background:rgba(70,72,70,.55)}
+.ctaband>*{position:relative;z-index:2}
+.ctaband h2{font-size:clamp(28px,4vw,42px);font-weight:600;margin-bottom:12px}
+.ctaband p{font-size:18px;opacity:.95;margin-bottom:26px}
+
+/* ---------------------------------------------------------------- PROJECTS */
+.filterbar{display:flex;justify-content:center;flex-wrap:wrap;gap:22px;margin-bottom:44px}
+.filterbar button{font-family:'Poppins',sans-serif;font-size:15px;font-weight:500;color:var(--ink);
+  background:none;border:none;cursor:pointer;padding:8px 6px;border-bottom:2px solid transparent;transition:.2s}
+.filterbar button:hover{color:var(--coral)}
+.filterbar button.active{color:#fff;background:var(--coral);border-radius:4px;padding:8px 18px}
+
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:30px}
+.pcard{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;
+  color:inherit;transition:transform .25s,box-shadow .25s}
+a.pcard:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+.pcard .pic{aspect-ratio:3/2;background-size:cover;background-position:center}
+.pcard .body{padding:22px 24px 26px}
+.pcard .meta{font-family:'Poppins',sans-serif;font-size:13px;color:var(--coral-d);font-weight:500}
+.pcard h3{font-size:22px;font-weight:600;margin:6px 0 10px}
+.pcard .body p{color:var(--muted);font-size:14px}
+.pcard .link{display:inline-block;margin-top:12px;font-family:'Poppins',sans-serif;font-weight:600;font-size:14px;color:var(--coral-d)}
+
+/* project detail facts */
+.facts{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:28px 30px;display:grid;gap:16px}
+.facts .row{display:grid;gap:2px}
+.facts .lbl{font-family:'Poppins',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--coral-d);font-weight:500}
+.facts .val{font-size:18px;font-weight:600}
+
+/* gallery + lightbox */
+.gallery{columns:3;column-gap:16px}
+.gallery img{width:100%;margin:0 0 16px;border-radius:6px;cursor:zoom-in;transition:filter .2s}
+.gallery img:hover{filter:brightness(1.05)}
+.postnav{display:flex;justify-content:space-between;gap:16px;margin-top:8px}
+.postnav a{font-family:'Poppins',sans-serif;font-weight:500;font-size:14px;color:var(--coral-d)}
+
+.lb{position:fixed;inset:0;background:rgba(28,30,28,.95);display:none;align-items:center;justify-content:center;z-index:100}
+.lb.open{display:flex}
+.lb img{max-width:90vw;max-height:85vh;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lb button{position:absolute;background:rgba(255,255,255,.14);color:#fff;border:none;width:52px;height:52px;border-radius:50%;
+  font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.lb button:hover{background:var(--coral)}
+.lb .close{top:24px;right:24px;font-size:20px}
+.lb .prev{left:24px;top:50%;transform:translateY(-50%)}
+.lb .next{right:24px;top:50%;transform:translateY(-50%)}
+
+/* ---------------------------------------------------------------- CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:50px;align-items:start}
+.cwidget{display:grid;gap:22px}
+.cwidget .row{display:flex;align-items:center;gap:16px}
+.cwidget .ic{width:48px;height:48px;flex:0 0 48px;border-radius:50%;background:rgba(208,136,110,.14);
+  display:flex;align-items:center;justify-content:center}
+.cwidget .ic svg{width:22px;height:22px;stroke:var(--coral-d)}
+.cwidget .lbl{font-size:13px;color:var(--muted)}
+.cwidget .val{font-size:18px;font-weight:600;overflow-wrap:anywhere}
+.formcard{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:34px}
+.form{display:grid;gap:18px}
+.form label{display:block;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;margin-bottom:7px}
+.form input,.form textarea{width:100%;padding:13px 16px;border:1px solid var(--line);border-radius:6px;background:#fff;
+  font-family:'Raleway',sans-serif;font-size:15px;color:var(--ink);transition:border-color .2s,box-shadow .2s}
+.form input:focus,.form textarea:focus{outline:none;border-color:var(--coral);box-shadow:0 0 0 3px rgba(208,136,110,.16)}
+.form textarea{min-height:150px;resize:vertical}
+.form .confirm{display:none;border-radius:6px;padding:16px 18px;font-weight:500;font-size:15px}
+.form .confirm.show{display:block}
+.form .confirm.ok{background:rgba(143,168,134,.16);color:#5c7a53}
+.form .confirm.err{background:rgba(180,80,80,.12);color:#9a3d3d}
+.form .note{font-size:13px;color:var(--muted)}
+
+/* ---------------------------------------------------------------- FOOTER */
+footer.ft{background:#f1ebe0;color:var(--muted);padding:48px 0 28px;border-top:1px solid var(--line)}
+footer.ft .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+footer.ft .fbrand img{height:82px;width:auto;display:block}
+footer.ft .links{display:flex;gap:24px;font-size:14px;flex-wrap:wrap;font-family:'Poppins',sans-serif}
+footer.ft .links a{color:var(--ink);opacity:.9}
+footer.ft .links a:hover{opacity:1;color:var(--coral-d)}
+footer.ft .fcontact{font-size:14px;color:var(--muted);display:grid;gap:4px}
+footer.ft .copy{width:100%;margin-top:26px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;opacity:.75;text-align:center}
+
+/* floating call button */
+.callbtn{position:fixed;right:18px;bottom:18px;z-index:60;width:52px;height:52px;border-radius:8px;background:var(--coral);
+  display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.2);transition:background .2s}
+.callbtn:hover{background:var(--coral-d)}
+.callbtn svg{width:22px;height:22px;stroke:#fff;fill:none}
+
+/* ---------------------------------------------------------------- RESPONSIVE */
+@media(max-width:980px){
+  .split,.contact-grid,.duo{grid-template-columns:1fr;gap:36px}
+  .split.wide-text{grid-template-columns:1fr}
+  .price-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:860px){
+  .nav ul{display:none}
+  .hamburger{display:flex}
+  .mobile{display:none;flex-direction:column;background:#fff;padding:10px 28px 22px}
+  .mobile.open{display:flex}
+  .mobile a{padding:12px 0;font-family:'Poppins',sans-serif;font-size:16px;color:var(--ink);border-bottom:1px solid var(--line)}
+  .mobile a.sub{padding-left:16px;font-size:14px;color:var(--muted)}
+  .gallery{columns:2}
+}
+@media(max-width:560px){ .wrap{padding:0 20px} .gallery{columns:1} .price-grid{grid-template-columns:1fr} .lb .prev{left:10px}.lb .next{right:10px} }
