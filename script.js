@@ -95,6 +95,7 @@
             conf.textContent = 'Bedankt voor je bericht! Ik neem zo snel mogelijk contact met je op.';
             form.reset();
             btn.textContent = 'Verzonden';
+            if (window.gaEvent) window.gaEvent('contact_formulier_verzonden');
           } else {
             conf.className = 'confirm err show';
             conf.textContent = 'Er ging iets mis. Bel of mail me gerust op marieke@meraki-greendesign.nl.';
@@ -110,4 +111,66 @@
         });
     });
   }
+  /* ---- Google Analytics 4 + AVG cookie-consent (GA laadt pas na toestemming) ---- */
+  var GA_ID = 'G-MZEEB1CT9G';
+  var CONSENT_KEY = 'meraki-consent';
+
+  function loadGA() {
+    if (window.__gaOn) return;
+    window.__gaOn = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('consent', 'update', {
+      ad_storage: 'granted', analytics_storage: 'granted',
+      ad_user_data: 'granted', ad_personalization: 'granted'
+    });
+    window.gtag('config', GA_ID, { anonymize_ip: true });
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+  }
+
+  window.gaEvent = function (name, params) {
+    if (window.__gaOn && window.gtag) window.gtag('event', name, params || {});
+  };
+
+  function privacyHref() {
+    var link = document.querySelector('link[rel="stylesheet"][href$="style.css"]');
+    var base = link ? link.getAttribute('href').replace(/style\.css$/, '') : '';
+    return base + 'privacy-policy/';
+  }
+
+  (function consent() {
+    var choice = null;
+    try { choice = localStorage.getItem(CONSENT_KEY); } catch (e) {}
+    if (choice === 'granted') { loadGA(); return; }
+    if (choice === 'denied') { return; }
+    var bar = document.createElement('div');
+    bar.className = 'cookiebar';
+    bar.setAttribute('role', 'dialog');
+    bar.setAttribute('aria-label', 'Cookie-toestemming');
+    bar.innerHTML =
+      '<p>Deze site gebruikt analytische cookies (Google Analytics) om te zien hoe de site gebruikt wordt — alleen met jouw toestemming. Meer info in de <a href="' + privacyHref() + '">privacyverklaring</a>.</p>' +
+      '<div class="cookiebtns">' +
+      '<button type="button" class="btn ghost-dark" data-c="deny">Weigeren</button>' +
+      '<button type="button" class="btn" data-c="accept">Accepteren</button></div>';
+    document.body.appendChild(bar);
+    bar.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      var c = b.getAttribute('data-c');
+      try { localStorage.setItem(CONSENT_KEY, c === 'accept' ? 'granted' : 'denied'); } catch (e) {}
+      if (c === 'accept') loadGA();
+      bar.remove();
+    });
+  })();
+
+  /* ---- event-tracking: telefoon- en e-mailkliks (alleen als GA aan staat) ---- */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a'); if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (href.indexOf('tel:') === 0) window.gaEvent('klik_telefoon');
+    else if (href.indexOf('mailto:') === 0) window.gaEvent('klik_email');
+  });
 })();

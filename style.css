@@ -235,6 +235,23 @@ footer.ft .copy{width:100%;margin-top:26px;padding-top:20px;border-top:1px solid
 .callbtn:hover{background:var(--coral-d)}
 .callbtn svg{width:22px;height:22px;stroke:#fff;fill:none}
 
+/* footer Instagram icon */
+footer.ft .fig{display:inline-flex;align-items:center;margin-top:2px}
+footer.ft .fig svg{width:22px;height:22px;stroke:#c7cbc3;fill:none;transition:stroke .2s}
+footer.ft .fig:hover svg{stroke:var(--coral)}
+
+/* ---------------------------------------------------------------- COOKIE BANNER */
+.cookiebar{position:fixed;left:0;right:0;bottom:0;z-index:80;background:#2b302a;color:#e8e6e1;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 26px;
+  padding:16px 24px;font-size:14px;box-shadow:0 -6px 24px rgba(0,0,0,.18)}
+.cookiebar p{max-width:720px;margin:0}
+.cookiebar a{color:var(--coral);text-decoration:underline}
+.cookiebtns{display:flex;gap:12px;flex-shrink:0}
+.cookiebar .btn{padding:10px 24px;font-size:14px}
+.btn.ghost-dark{background:transparent;border:1.5px solid rgba(255,255,255,.55);color:#fff}
+.btn.ghost-dark:hover{background:#fff;color:var(--ink);box-shadow:none}
+@media(max-width:560px){ .cookiebar{flex-direction:column;text-align:center;gap:12px} }
+
 /* ---------------------------------------------------------------- RESPONSIVE */
 @media(max-width:980px){
   .split,.contact-grid,.duo{grid-template-columns:1fr;gap:36px}
