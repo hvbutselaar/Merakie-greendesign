@@ -39,7 +39,8 @@ All asset/nav links are **relative, depth-aware**. Use the right prefix for the 
   Add-Type -AssemblyName System.Drawing
   $src="C:\path\to\original.jpg"; $dst="img\new-name.jpg"; $max=1800; $q=80
   $img=[System.Drawing.Image]::FromFile($src)
-  $r=[Math]::Min(1,[Math]::Min($max/$img.Width,$max/$img.Height))
+  # NB: gebruik 1.0 (niet 1), anders kiest [Math]::Min de (int,int)-overload en wordt de ratio 0 -> 0x0 bitmap
+  $r=[Math]::Min(1.0,[Math]::Min([double]$max/$img.Width,[double]$max/$img.Height))
   $w=[int]($img.Width*$r); $h=[int]($img.Height*$r)
   $bmp=New-Object System.Drawing.Bitmap $w,$h
   $g=[System.Drawing.Graphics]::FromImage($bmp); $g.InterpolationMode='HighQualityBicubic'

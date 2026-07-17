@@ -1,0 +1,7 @@
+# Bronfoto's / werkmateriaal (niet deployen)
+TO_UPLOAD/
+
+# Overig
+SITE/
+.DS_Store
+Thumbs.db
