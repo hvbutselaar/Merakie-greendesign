@@ -22,7 +22,7 @@ body{font-family:'Raleway',sans-serif;color:var(--ink);background:#faf7f2;line-h
 a{color:inherit;text-decoration:none}
 .prose a:not(.btn){color:var(--coral-d);text-decoration:underline;text-underline-offset:3px}
 .prose a:not(.btn):hover{color:var(--coral)}
-img{max-width:100%;display:block}
+img{max-width:100%;height:auto;display:block}
 h1,h2,h3,h4{font-family:'Poppins',sans-serif;line-height:1.15}
 
 .wrap{max-width:1140px;margin:0 auto;padding:0 28px}
