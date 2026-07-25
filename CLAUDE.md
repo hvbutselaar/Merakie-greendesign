@@ -61,6 +61,12 @@ All asset/nav links are **relative, depth-aware**. Use the right prefix for the 
 3. Change that one path to your new file. If the photo is also the page's `og:image`, save a `.jpg`
    variant too and point the absolute og/twitter URLs at that. Preview, then `git commit` + `git push`.
 
+## CSS/JS cache-busting (belangrijk bij elke wijziging)
+`style.css` wordt 7 dagen client-side gecachet (.htaccess). Pages verwijzen ernaar met `style.css?v=N` —
+**bij ELKE css-wijziging het versienummer in alle 16 HTML-pagina's ophogen** (sed over `*.html`), anders zien
+terugkerende bezoekers tot een week lang de oude styling (gebeurde 2026-07-25 bij de footer-regiokolommen).
+`script.js` heeft nog géén ?v-parameter — voeg die toe zodra script.js wijzigt.
+
 ## Local preview
 `.claude/launch.json` config **meraki-clean** serves this folder on **port 8101**
 (use the `preview_start` tool with name `meraki-clean`). Verify with `preview_snapshot` /
