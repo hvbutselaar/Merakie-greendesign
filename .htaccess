@@ -16,6 +16,9 @@ RewriteRule ^sth/?$ /kantoorbeplanting-nijkerk/ [L,R=301]
 # Nette 404-pagina in de huisstijl
 ErrorDocument 404 /404.html
 
+# Expliciete charset in de Content-Type header (voorkomt Latin-1 misinterpretatie door crawlers)
+AddDefaultCharset UTF-8
+
 # ---------------------------------------------------------------- SECURITY HEADERS
 <IfModule mod_headers.c>
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"

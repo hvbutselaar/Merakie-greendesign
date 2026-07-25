@@ -32,34 +32,34 @@ All asset/nav links are **relative, depth-aware**. Use the right prefix for the 
 - Hero = full-bleed `background-image` on `.hero` with white title; nav is centered, logo removed
   (`.nav .brand` is unused/absolutely-positioned, menu is `justify-content:center`).
 
-## Images
-- Keep images web-sized: **max 1800px, JPEG quality 80**. Oversized images once broke deploy (216MB → 23MB).
-- No ffmpeg/imagemagick/pip on this machine. Optimize with **PowerShell + System.Drawing**. Example:
-  ```powershell
-  Add-Type -AssemblyName System.Drawing
-  $src="C:\path\to\original.jpg"; $dst="img\new-name.jpg"; $max=1800; $q=80
-  $img=[System.Drawing.Image]::FromFile($src)
-  # NB: gebruik 1.0 (niet 1), anders kiest [Math]::Min de (int,int)-overload en wordt de ratio 0 -> 0x0 bitmap
-  $r=[Math]::Min(1.0,[Math]::Min([double]$max/$img.Width,[double]$max/$img.Height))
-  $w=[int]($img.Width*$r); $h=[int]($img.Height*$r)
-  $bmp=New-Object System.Drawing.Bitmap $w,$h
-  $g=[System.Drawing.Graphics]::FromImage($bmp); $g.InterpolationMode='HighQualityBicubic'
-  $g.DrawImage($img,0,0,$w,$h)
-  $enc=[System.Drawing.Imaging.ImageCodecInfo]::GetImageEncoders()|?{$_.MimeType-eq'image/jpeg'}
-  $p=New-Object System.Drawing.Imaging.EncoderParameters 1
-  $p.Param[0]=New-Object System.Drawing.Imaging.EncoderParameter ([System.Drawing.Imaging.Encoder]::Quality),$q
-  $bmp.Save($dst,$enc,$p); $g.Dispose();$bmp.Dispose();$img.Dispose()
+## Images — WebP policy (since 2026-07-25 SEO pass)
+- **All on-page images are WebP**: max 1600px, quality 75 (photos). Pages reference `img/*.webp` in
+  `<img src>`, `background-image` and `<link rel="preload">`.
+- **`og:image`/`twitter:image`/JSON-LD blijven JPEG** (absolute URLs) — social scrapers zijn daar
+  betrouwbaarder mee. Daarom bestaan `.jpg` en `.webp` naast elkaar in `img/`; verwijder de jpg's niet.
+- Logo: `meraki-logo-l.webp` (666×700) voor on-page gebruik; `meraki-logo.webp` (512×512) is alleen favicon;
+  `meraki-logo.png` alleen nog als schema/og-referentie.
+- Convert with **Python + Pillow** (installed: Python 3.14, Pillow 12.3 — the old System.Drawing route is obsolete):
+  ```python
+  from PIL import Image
+  im = Image.open(src)  # nieuw bronbestand
+  r = min(1.0, 1600.0 / max(im.size))
+  if r < 1.0: im = im.resize((round(im.width*r), round(im.height*r)), Image.LANCZOS)
+  im.save('img/new-name.webp', 'WEBP', quality=75, method=6)
+  im.save('img/new-name.jpg', quality=80)  # alleen nodig als de foto ook og:image wordt
   ```
+- Oversized images once broke deploy (216MB → 23MB) — keep the 1600px cap.
 - Filenames are **per-spot and unique** (e.g. `home-tuin.jpg`, `kantoor-cover.jpg`) — don't reuse one file
   across multiple spots, otherwise a future single-photo swap changes several places at once.
 - New source photos from Marieke arrive as Obsidian attachments (often in the workspace root, names with
   spaces/parens). Optimize them into `img/` with a clean name, then point the specific reference at it.
 
 ### To swap one photo yourself
-1. Drop the new photo somewhere and optimize it into `Meraki_clean/img/newname.jpg` (recipe above).
-2. Find the spot in the page HTML — it's either `style="background-image:url('…/img/OLD.jpg')"`
-   (heroes, cards, CTA bands) or `<img src="…/img/OLD.jpg">` (split sections).
-3. Change that one path to your new file. Preview, then `git commit` + `git push`.
+1. Drop the new photo somewhere and optimize it into `Meraki_clean/img/newname.webp` (recipe above).
+2. Find the spot in the page HTML — it's either `style="background-image:url('…/img/OLD.webp')"`
+   (heroes, cards, CTA bands) or `<img src="…/img/OLD.webp">` (split sections).
+3. Change that one path to your new file. If the photo is also the page's `og:image`, save a `.jpg`
+   variant too and point the absolute og/twitter URLs at that. Preview, then `git commit` + `git push`.
 
 ## Local preview
 `.claude/launch.json` config **meraki-clean** serves this folder on **port 8101**
